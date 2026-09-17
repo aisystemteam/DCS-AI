@@ -3,10 +3,6 @@
 
 ```text
 DCS-KAI/
-├── docker-compose.yml
-├── requirements.txt
-├── .env.example
-│
 ├── data/
 │   └── F-16_통합_단계별체크리스트.xlsx
 │
@@ -19,12 +15,18 @@ DCS-KAI/
     │   └── qdrant.py
     └── rag/
 ```
+## Some works to do
+### Data Preprocessing
+### Build a Vector DB (Qdrant)
+### RAG System
 
-## Related Papers and Githubs
+
+## Related papers and githubs
 - FalconCopilot: https://aclanthology.org/2026.findings-acl.1500.pdf
 - Chuck's guide: https://chucksguides.com/
 - HAF-F16: https://info.publicintelligence.net/HAF-F16.pdf
 - EASA Artificial Intelligence Concept Paper : https://www.easa.europa.eu/en/document-library/general-publications/easa-artificial-intelligence-concept-paper-proposed-issue-3
 - dcs-lua-runner-mcp: https://github.com/sevenfifty777/dcs-lua-runner-mcp
+- Real-time speech full duplex (FD) model : https://huggingface.co/nvidia/NVIDIA-NemotronLabs-VoiceChat-11B
     
 
