@@ -29,4 +29,6 @@ DCS-KAI/
 - dcs-lua-runner-mcp: https://github.com/sevenfifty777/dcs-lua-runner-mcp
 - Real-time speech full duplex (FD) model : https://huggingface.co/nvidia/NVIDIA-NemotronLabs-VoiceChat-11B
     
-
+## Goal
+- 한국항공우주학회 추계학술대회 (26.11.12)
+- https://aclrollingreview.org/dates 
