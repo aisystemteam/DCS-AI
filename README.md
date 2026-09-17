@@ -18,7 +18,10 @@ DCS-KAI/
 ## Some works to do
 ### Data Preprocessing
 ### Build a Vector DB (Qdrant)
+- Qdrant Cloud (Free Tier) (외부망) (https://qdrant.tech/pricing/)
+- Qdrant (내부망)
 ### RAG System
+### Build a mcp tool for both claude and chatgpt
 
 
 ## Related papers and githubs
