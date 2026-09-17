@@ -1,6 +1,4 @@
 # DCS-KAI
-## Architecture
-
 ## Project Structure
 
 ```text
@@ -22,5 +20,11 @@ DCS-KAI/
     └── rag/
 ```
 
+## Related Papers and Githubs
+- FalconCopilot: https://aclanthology.org/2026.findings-acl.1500.pdf
+- Chuck's guide: https://chucksguides.com/
+- HAF-F16: https://info.publicintelligence.net/HAF-F16.pdf
+- EASA Artificial Intelligence Concept Paper : https://www.easa.europa.eu/en/document-library/general-publications/easa-artificial-intelligence-concept-paper-proposed-issue-3
+- dcs-lua-runner-mcp: https://github.com/sevenfifty777/dcs-lua-runner-mcp
     
 
