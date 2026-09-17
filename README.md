@@ -4,7 +4,8 @@
 ```text
 DCS-KAI/
 ├── data/
-│   └── F-16_통합_단계별체크리스트.xlsx
+│   ├── F-16_통합_단계별체크리스트_qdrant_preprocessed.json
+│   └── F-16_통합_단계별체크리스트_ver260917.xlsx
 │
 ├── scripts/
 │   └── ingest_f16_checklist.py
