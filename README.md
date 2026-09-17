@@ -1,6 +1,9 @@
 # DCS-KAI
 ## Architecture
 
+## Project Structure
+
+```text
 DCS-KAI/
 ├── docker-compose.yml
 ├── requirements.txt
@@ -17,5 +20,7 @@ DCS-KAI/
     ├── vectorstore/
     │   └── qdrant.py
     └── rag/
+```
+
     
 
