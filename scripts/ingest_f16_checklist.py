@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
 import uuid
 from pathlib import Path
 from typing import Any, Iterable
@@ -17,9 +18,12 @@ import pandas as pd
 from qdrant_client import QdrantClient, models
 from sentence_transformers import SentenceTransformer
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from src.embeddings.embedder import DEFAULT_MODEL
+from src.vectorstore.qdrant import DEFAULT_COLLECTION
+
 DEFAULT_SHEET = "통합 체크리스트"
-DEFAULT_COLLECTION = "f16_procedures"
-DEFAULT_MODEL = "BAAI/bge-m3"
 DATASET_NAME = "F-16 단계별체크리스트"
 AIRCRAFT = "F-16"
 

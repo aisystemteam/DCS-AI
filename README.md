@@ -8,14 +8,54 @@ DCS-KAI/
 │   └── F-16_통합_단계별체크리스트_ver260917.xlsx
 │
 ├── scripts/
-│   └── ingest_f16_checklist.py
+│   └── ingest_f16_checklist.py   # xlsx -> embeddings -> Qdrant upsert
 │
 └── src/
     ├── embeddings/
+    │   └── embedder.py           # query embedding (BAAI/bge-m3)
     ├── vectorstore/
-    │   └── qdrant.py
-    └── rag/
+    │   └── qdrant.py             # Qdrant client
+    ├── rag/
+    │   └── search.py             # semantic search over f16_procedures
+    └── mcp/
+        └── server.py             # MCP server exposing search as a Claude tool
 ```
+
+## RAG / MCP Setup
+
+1. Install dependencies: `pip install -r requirements.txt`
+2. Create a Qdrant Cloud free-tier cluster (https://qdrant.tech/pricing/) and copy its URL + API key,
+   or run Qdrant locally (`docker run -p 6333:6333 qdrant/qdrant`) for an internal-network setup.
+3. Copy `.env.example` to `.env` (or export the vars directly) and fill in `QDRANT_URL` / `QDRANT_API_KEY`.
+4. Ingest the checklist into Qdrant:
+   ```bash
+   export QDRANT_URL=... QDRANT_API_KEY=...
+   python scripts/ingest_f16_checklist.py "data/F-16_통합_단계별체크리스트_ver260917.xlsx"
+   ```
+5. Smoke-test the MCP server locally (stdio transport, Ctrl+C to stop):
+   ```bash
+   python src/mcp/server.py
+   ```
+6. Register it with Claude Code:
+   ```bash
+   claude mcp add dcs-f16-rag \
+     --env QDRANT_URL=... --env QDRANT_API_KEY=... \
+     -- python /absolute/path/to/DCS-KAI/src/mcp/server.py
+   ```
+   Or in Claude Desktop's `claude_desktop_config.json`:
+   ```json
+   {
+     "mcpServers": {
+       "dcs-f16-rag": {
+         "command": "python",
+         "args": ["/absolute/path/to/DCS-KAI/src/mcp/server.py"],
+         "env": { "QDRANT_URL": "...", "QDRANT_API_KEY": "..." }
+       }
+     }
+   }
+   ```
+   Any other MCP-compatible client (e.g. ChatGPT desktop/connectors) can point at the same
+   `src/mcp/server.py` stdio command.
 
 **임무 단계 (코드)**
 | 코드 | 단계명 | 절차 수 |
@@ -47,8 +87,14 @@ DCS-KAI/
 ### Build a Vector DB (Qdrant)
 - Qdrant Cloud (Free Tier) (외부망) (https://qdrant.tech/pricing/)
 - Qdrant (내부망)
+- [ ] Populate the `f16_procedures` collection by running `scripts/ingest_f16_checklist.py`
+      against a real Qdrant Cloud free-tier cluster (needs a network-unrestricted
+      environment; see "RAG / MCP Setup" above)
 ### RAG System
+- [x] `src/rag/search.py`: semantic search over `f16_procedures`
 ### Build a mcp tool for both claude and chatgpt
+- [x] `src/mcp/server.py`: stdio MCP server exposing `search_f16_checklist`
+- [ ] Verify end-to-end against a populated collection, then register with Claude Code/Desktop
 
 
 ## Related papers and githubs

@@ -1,0 +1,5 @@
+pandas
+openpyxl
+qdrant-client
+sentence-transformers
+mcp<2
