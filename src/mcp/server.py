@@ -52,4 +52,11 @@ def search_f16_checklist(
 
 
 if __name__ == "__main__":
+    # Load the embedding model before entering the stdio loop. Otherwise the
+    # first real search pays for the (multi-GB, first-run) model
+    # download/load inline, which can exceed the calling client's per-tool-call
+    # timeout.
+    from src.embeddings.embedder import get_embedding_model
+
+    get_embedding_model()
     mcp.run(transport="stdio")

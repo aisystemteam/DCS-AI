@@ -32,7 +32,9 @@ DCS-KAI/
    export QDRANT_URL=... QDRANT_API_KEY=...
    python scripts/ingest_f16_checklist.py "data/F-16_통합_단계별체크리스트_ver260917.xlsx"
    ```
-5. Smoke-test the MCP server locally (stdio transport, Ctrl+C to stop):
+5. Smoke-test the MCP server locally (stdio transport, Ctrl+C to stop). The first run
+   downloads the embedding model (a few GB) before the server signals ready, so let it
+   finish here rather than hitting that cold start from inside a Claude tool call:
    ```bash
    python src/mcp/server.py
    ```
@@ -40,14 +42,14 @@ DCS-KAI/
    ```bash
    claude mcp add dcs-f16-rag \
      --env QDRANT_URL=... --env QDRANT_API_KEY=... \
-     -- python /absolute/path/to/DCS-KAI/src/mcp/server.py
+     -- /absolute/path/to/venv/bin/python /absolute/path/to/DCS-KAI/src/mcp/server.py
    ```
    Or in Claude Desktop's `claude_desktop_config.json`:
    ```json
    {
      "mcpServers": {
        "dcs-f16-rag": {
-         "command": "python",
+         "command": "/absolute/path/to/venv/bin/python",
          "args": ["/absolute/path/to/DCS-KAI/src/mcp/server.py"],
          "env": { "QDRANT_URL": "...", "QDRANT_API_KEY": "..." }
        }
@@ -56,6 +58,17 @@ DCS-KAI/
    ```
    Any other MCP-compatible client (e.g. ChatGPT desktop/connectors) can point at the same
    `src/mcp/server.py` stdio command.
+
+   **Gotchas that actually bite in practice:**
+   - Use the **full path to the Python interpreter inside your venv** (`.../venv/bin/python`),
+     not bare `python`/`python3`. Claude Desktop/Code launches the server without your shell's
+     PATH or activated venv, so a bare `python` often resolves to the wrong interpreter (or none)
+     and the server fails silently on startup.
+   - `env` in the config is required — the client does **not** inherit your shell's exported
+     `QDRANT_URL`/`QDRANT_API_KEY`; set them there explicitly.
+   - Python **3.10+** is required (the `mcp` package's typing requires it).
+   - Do step 5 (manual run) at least once before registering — it forces the embedding model
+     download/load to happen outside of Claude's tool-call timeout window.
 
 **임무 단계 (코드)**
 | 코드 | 단계명 | 절차 수 |
