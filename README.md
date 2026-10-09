@@ -7,6 +7,9 @@ DCS-KAI/
 │   ├── F-16_통합_단계별체크리스트_qdrant_preprocessed.json
 │   └── F-16_통합_단계별체크리스트_ver260917.xlsx
 │
+├── docs/
+│   └── demo-missions.md                       # 실증 미션 (M1 공대공 / M2 공대지 Pop-up)
+│
 ├── scripts/
 │   └── ingest_f16_checklist.py
 │
@@ -41,6 +44,14 @@ DCS-KAI/
 | PA | 상시 · 필요 시 | 17 |
 | **합계** | | **376** |
 
+
+## Demo Missions (실증 미션)
+| # | 미션 | 참여 AI | 실증 대상 |
+|---|---|---|---|
+| M1 | 공대공 전투 | 이스투아 + 미스테어 | ROE(Hostile Intent/Act) 판단 보조, 교전 전 절차 Remind, 기종별 BVR Shot Plan(TR/DOR/DR), 미스테어의 적 폭격기 자율 격추 |
+| M2 | 공대지 전투 — 저고도 침투 Pop-up Attack | 이스투아 | 경로 이탈 시 IP/VRP 등 폭격 제원 재산출·고지, ICP/DED 직접 입력 |
+
+- 상세: [docs/demo-missions.md](docs/demo-missions.md) (세 번째 미션 추후 추가)
 
 ## Some works to do
 ### Data Preprocessing
