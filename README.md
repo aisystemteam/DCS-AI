@@ -5,10 +5,17 @@
 DCS-KAI/
 ├── data/
 │   ├── F-16_통합_단계별체크리스트_qdrant_preprocessed.json
-│   └── F-16_통합_단계별체크리스트_ver260917.xlsx
+│   ├── F-16_통합_단계별체크리스트_ver260917.xlsx
+│   ├── csv2qdrant.py
+│   └── cockpit_panels/
+│       └── F-16_Cockpit_Panels_Duality.xlsx   # 조종석 패널 DB (47 패널 / 359 컨트롤 / 746 position)
+│
+├── docs/
+│   └── cockpit-panel-db.md                    # 패널 DB 구조·식별자 규칙
 │
 ├── scripts/
-│   └── ingest_f16_checklist.py
+│   ├── ingest_f16_checklist.py
+│   └── panel_db/                              # 패널 DB 엑셀 생성 스크립트 (python build_audio.py)
 │
 └── src/
     ├── embeddings/
@@ -41,6 +48,11 @@ DCS-KAI/
 | PA | 상시 · 필요 시 | 17 |
 | **합계** | | **376** |
 
+
+## Cockpit Panel DB (조종석 패널 매핑)
+- 절차 문서의 조작 항목을 식별자 하나(`panel_id.control_code.position_code`, 예: `CMDS.MODE.SEMI`)로 참조하기 위한 F-16C 조종석 스위치 DB
+- 정규화 테이블(PANELS/CONTROLS/POSITIONS) + ICP/DED·MFD 상태기계 층 + 조작 매크로(ICP_ACTIONS/MFD_ACTIONS/PANEL_ACTIONS) + HOTAS 문맥별 기능표
+- 상세: [docs/cockpit-panel-db.md](docs/cockpit-panel-db.md)
 
 ## Some works to do
 ### Data Preprocessing
